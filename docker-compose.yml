@@ -1,4 +1,5 @@
 version: '3'
+
 services:
   jenkins:
     image: jenkins:latest
@@ -6,4 +7,24 @@ services:
       - 8080:8080
       - 50000:50000
     volumes:
-      - ./jenkins_home:/var/jenkins_home
+      - ./volumes/jenkins:/var/jenkins_home
+
+  gerrit:
+    image: openfrontier/gerrit:latest
+    ports:
+      - 8000:8080
+      - 29418:29418
+    volumes:
+      - ./volumes/gerrit:/var/gerrit/review_site
+    environment:
+      - WEBURL=http://127.0.0.1:8000/
+
+  zuul:
+    build:
+      context: ./build
+      dockerfile: Dockerfile.zuul
+
+  gearman:
+    build:
+      context: ./build
+      dockerfile: Dockerfile.gearman
