@@ -3,28 +3,35 @@ version: '3'
 services:
   jenkins:
     image: jenkins:latest
+    networks:
+      - jjb
     ports:
       - 8080:8080
       - 50000:50000
     volumes:
-      - ./volumes/jenkins:/var/jenkins_home
+      - ./docker/volumes/jenkins:/var/jenkins_home
 
   gerrit:
     image: openfrontier/gerrit:latest
+    networks:
+      - jjb
     ports:
       - 8000:8080
       - 29418:29418
     volumes:
-      - ./volumes/gerrit:/var/gerrit/review_site
+      - ./docker/volumes/gerrit:/var/gerrit/review_site
     environment:
       - WEBURL=http://127.0.0.1:8000/
 
   zuul:
     build:
-      context: ./build
+      context: docker
       dockerfile: Dockerfile.zuul
+    networks:
+      - jjb
 
-  gearman:
-    build:
-      context: ./build
-      dockerfile: Dockerfile.gearman
+networks:
+  jjb:
+    ipam:
+      config:
+        - subnet: 192.168.0.0/25

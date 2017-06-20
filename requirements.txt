@@ -1,1 +1,2 @@
+docker-compose
 jenkins-job-builder
