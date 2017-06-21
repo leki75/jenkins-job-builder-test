@@ -15,8 +15,11 @@ RUN apt-get update && \
 RUN pip install -U pip && \
     pip install zuul
 
-RUN mkdir -p /git /etc/zuul /var/lib/zuul/times
+RUN mkdir -p /git \
+             /etc/zuul \
+             /var/lib/zuul/times
 
-COPY zuul /etc/zuul
+COPY etc/       /etc/zuul/
+COPY ssh/id_rsa /root/.ssh/
 
 CMD ["/usr/local/bin/zuul-server", "-d"]
