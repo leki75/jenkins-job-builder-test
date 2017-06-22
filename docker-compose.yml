@@ -29,6 +29,8 @@ services:
       dockerfile: Dockerfile
     networks:
       - jjb
+    ports:
+      - 8888:8080
 
 networks:
   jjb:
