@@ -32,7 +32,7 @@ docker-compose up -d
 cat zuul/ssh/id_rsa.pub | ssh -l <AdminUser> -p 29418 localhost gerrit create-account zuul \
     --email zuul@examle.com \
     --full-name "Zuul\ daemon" \
-    --group "Non-Interactive Users" \
+    --group "Non-Interactive\ Users" \
     --ssh-key -
 ```
 
